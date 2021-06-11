@@ -6,7 +6,7 @@ const { hexToUtf8 } = require('./utils/convert');
 
 const mqttClient = mqtt.connect(process.env.MQTT_BROKER_ADDRESS);
 mqttClient.on('connect', () => {
-    logger.info('Connected to MQTT Broker');
+    console.info('Connected to MQTT Broker');
 });
 
 const server = net.createServer(socket => {
