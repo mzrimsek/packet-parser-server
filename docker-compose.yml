@@ -1,8 +1,8 @@
 version: '3'
 
 volumes:
-  mosquitto_data:
-  mosquitto_log:
+  mosquitto_data: {}
+  mosquitto_log: {}
 
 services:
   server:
