@@ -1,0 +1,30 @@
+version: '3'
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
+
+services:
+  server:
+    image: ghcr.io/mzrimsek/packet-parser-server:latest
+    container_name: packet-parser-server
+    ports:
+      - ${HOST_PORT}:3000
+    environment:
+      - PACKET_MATCHER=${PACKET_MATCHER}
+      - MQTT_BROKER_ADDRESS=tcp://mosquitto
+      - TARGET_TOPIC=${TARGET_TOPIC}
+    restart: unless-stopped
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    hostname: mosquitto
+    container_name: mosquitto
+    ports:
+      - 1883:1883
+      - 8883:8883
+    volumes:
+      mosquitto_data:/mosquitto/data
+      mosquitto_log:/mosquitto/log
+      ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: unless-stopped
