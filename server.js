@@ -34,7 +34,12 @@ const server = net.createServer(socket => {
             const matchedContent = match[0];
             console.info(`matched content: ${matchedContent}`);
 
-            mqttClient.publish(process.env.TARGET_TOPIC, matchedContent);
+            const contentToSend = {
+                message: matchedContent,
+                timestamp: new Date().toISOString()
+            };
+
+            mqttClient.publish(process.env.TARGET_TOPIC, contentToSend);
         }
 
         socket.end();
