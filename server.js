@@ -39,7 +39,10 @@ const server = net.createServer(socket => {
                 timestamp: new Date().toISOString()
             };
 
-            mqttClient.publish(process.env.TARGET_TOPIC, contentToSend);
+            const stringifiedContent = JSON.stringify(contentToSend);
+
+            mqttClient.publish(process.env.TARGET_TOPIC, stringifiedContent);
+            console.info(`published ${stringifiedContent} to topic ${process.env.TARGET_TOPIC}`);
         }
 
         socket.end();
